@@ -45,13 +45,12 @@ async def search_post(post_id: int = Path(description='This is a id of the post 
 
 
 @apps.post('/posts')
-async def post_create(post_name: Optional[str] = Query(None,max_length=50,  description='this is a create post to post_name'),
+async def post_create(title: Optional[str] = Query(None,max_length=50,  description='this is a create post to title'),
                       description: Optional[str] = Query(None, max_length=150,  description='this is a create post to description')):
-       if post_name and description: 
-            post = {"id":random.randint(4,10),"name":post_name,"description":description,"is_published":False}
+       if title and description: 
+            post = {"id":random.randint(4,10),"name":title,"description":description,"is_published":False}
             post_list.append(post)              
             return JSONResponse(post, status_code=status.HTTP_201_CREATED)
-            
        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="We don't create  any post")                
 
 
