@@ -38,15 +38,19 @@ async def show_post():
 async def search_post(post_id: int = Path(description='This is a id of the post to search')):
     for post in post_list:
         if post["id"] == post_id:
-            return JSONResponse(post,status_code=status.HTTP_200_OK)
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"We don't have any id={id}")                
+            return JSONResponse(post,
+                                status_code=status.HTTP_200_OK)
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"We don't have any id={id}")                
     
         
 
 
 @apps.post('/posts')
-async def post_create(title: Optional[str] = Query(None,max_length=50,  description='this is a create post to title'),
-                      description: Optional[str] = Query(None, max_length=150,  description='this is a create post to description')):
+async def post_create(title: Optional[str] = Query(None,max_length=50, 
+                                                   description='this is a create post to title'),
+                      description: Optional[str] = Query(None, max_length=150,
+                                                         description='this is a create post to description')):
        if title and description: 
             post = {
                     "id":random.randint(4,10),
@@ -56,7 +60,8 @@ async def post_create(title: Optional[str] = Query(None,max_length=50,  descript
                 }
             post_list.append(post)              
             return JSONResponse(post, status_code=status.HTTP_201_CREATED)
-       raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="We don't create  any post")                
+       raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                           detail="We don't create  any post")                
 
 
 @apps.put("/posts/{post_id}") 
@@ -69,8 +74,10 @@ async def post_update(post_id: int = Path(description="type your post id to upda
             item["title"] = title
             item["description"] = description
             item["is_published"] = is_published
-        return JSONResponse(item, status_code=status.HTTP_200_OK)       
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Post not found")   
+        return JSONResponse(item, 
+                            status_code=status.HTTP_200_OK)       
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail="Post not found")   
 
 
 @apps.delete("/posts/{post_id}")
